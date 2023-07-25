@@ -11,7 +11,6 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) | 
 
 " plugin list
 call plug#begin()
-    Plug 'alec-gibson/nvim-tetris'
     Plug 'davidhalter/jedi-vim'
     Plug 'mhinz/vim-startify'
     Plug 'morhetz/gruvbox'
@@ -19,9 +18,12 @@ call plug#begin()
     Plug 'tpope/vim-fugitive' " git-integration
     Plug 'nvim-lua/plenary.nvim' " dependency telescope
     Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' } " requirement: apt install ripgrep
+    Plug 'pixelneo/vim-python-docstring' " python-docstrings :Docstring
     Plug 'preservim/tagbar'
     Plug 'vim-airline/vim-airline'
-    Plug 'seandewar/nvimesweeper' " minesweeper
+    " -- games --
+    " Plug 'alec-gibson/nvim-tetris'
+    " Plug 'seandewar/nvimesweeper' " minesweeper
 call plug#end()
 
 " -------------------------------------------------------
