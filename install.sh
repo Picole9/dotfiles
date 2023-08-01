@@ -9,21 +9,21 @@ function check_installed() {
     fi
 }
 
+if [ "$1" == "--proxy" ]; then
+    export HTTP_PROXY=http://http-proxy.ifam.fraunhofer.de:81
+    export HTTPS_PROXY=http://http-proxy.ifam.fraunhofer.de:81
+fi
 echo update system
 sudo apt update
 sudo apt upgrade -y
 echo install bat, exa
 sudo apt install bat exa -y
 echo copy config
-cp -r .config ~/.config
+cp -r .config/* ~/.config
 echo installing glow
 if check_installed "glow"; then
     sudo mkdir -p /etc/apt/keyrings
-    if [ "$1" == "--proxy" ]; then
-        curl -fsSL --proxy $2 https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-    else
-        curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-    fi
+    curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
     echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
     sudo apt update
     sudo apt install glow -y
@@ -31,9 +31,9 @@ fi
 echo installing neovim
 if check_installed "neovim"; then
     if [ "$1" == "--proxy" ]; then
-        sudo -E add-apt-repository ppa:neovim-ppa/stable
+        sudo -E add-apt-repository ppa:neovim-ppa/stable -y
     else
-        sudo add-apt-repository ppa:neovim-ppa/stable
+        sudo add-apt-repository ppa:neovim-ppa/stable -y
     fi
     sudo apt update
     sudo apt install neovim universal-ctags -y
@@ -41,12 +41,12 @@ fi
 echo installing fish
 if check_installed "fish"; then
     if [ "$1" == "--proxy" ]; then
-        sudo -E apt-add-repository ppa:fish-shell/release-3
+        sudo -E add-apt-repository ppa:fish-shell/release-3 -y
     else
-        sudo apt-add-repository ppa:fish-shell/release-3
+        sudo add-apt-repository ppa:fish-shell/release-3 -y
     fi
     sudo apt update && sudo apt install fish -y
-    chsh -s /usr/bin/fish
+    sudo chsh -s /usr/bin/fish
 fi
 #echo installing omf
 #if [ "$1" == "--proxy" ]; then
