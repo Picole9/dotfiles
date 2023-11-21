@@ -5,9 +5,7 @@ return {
         version = "*",
         lazy = false,
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = function()
-            require("nvim-tree").setup {}
-            vim.keymap.set("n", "<F3>", ":NvimTreeToggle<cr>")
-        end,
-    }
+        keys = { "<F3>", "<cmd>NvimTreeToggle<cr>", desc = "toggle file explorer" },
+        opts = {},
+	}
 }

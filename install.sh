@@ -10,14 +10,15 @@ function check_installed() {
 }
 
 if [ "$1" == "--proxy" ]; then
-    export HTTP_PROXY=http://http-proxy.ifam.fraunhofer.de:81
-    export HTTPS_PROXY=http://http-proxy.ifam.fraunhofer.de:81
+    export HTTP_PROXY=$2
+    export HTTPS_PROXY=$2
 fi
+
 echo update system
 sudo apt update
 sudo apt upgrade -y
-echo install bat, exa
-sudo apt install bat exa -y
+echo install bat \(cat\), exa {ls}, tldr {man}, ripgrep, fd-find
+sudo apt install bat exa tldr rip-grep fd-find btop -y
 echo copy config
 cp -r .config/* ~/.config
 echo installing glow
@@ -31,9 +32,9 @@ fi
 echo installing neovim
 if check_installed "neovim"; then
     if [ "$1" == "--proxy" ]; then
-        sudo -E add-apt-repository ppa:neovim-ppa/stable -y
+        sudo -E add-apt-repository ppa:neovim-ppa/unstable -y
     else
-        sudo add-apt-repository ppa:neovim-ppa/stable -y
+        sudo add-apt-repository ppa:neovim-ppa/unstable -y
     fi
     sudo apt update
     sudo apt install neovim universal-ctags -y
@@ -48,10 +49,10 @@ if check_installed "fish"; then
     sudo apt update && sudo apt install fish -y
     sudo chsh -s /usr/bin/fish
 fi
-#echo installing omf
-#if [ "$1" == "--proxy" ]; then
-#curl --proxy $2 https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-#else
-#curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-#fi
-#omf update
+echo installing fisher
+if [ "$1" == "--proxy" ]; then
+    curl --proxy $2 -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+else
+    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+fi
+fisher update

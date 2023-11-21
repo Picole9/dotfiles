@@ -3,7 +3,10 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        opt = {
+	dependencies = {
+		"windwp/nvim-ts-autotag"
+	},
+	opt = {
             ensure_installed = {
                 "bash",
                 "dockerfile",

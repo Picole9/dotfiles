@@ -1,7 +1,23 @@
 return {
-    {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.4',
-        requires = {'nvim-lua/plenary.nvim'}
+    { -- view markdown, requires glow as package
+        "ellisonleao/glow.nvim",
+        opts = {},
+        cmd = "Glow"
     },
+    { -- indent lines
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = {}
+    },
+    { -- comment for todo, hack, warn, parf, note, test, fix
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {}
+    },
+    { -- translations
+        "potamides/pantran.nvim",
+        opts = {
+            default_engine = "google"
+        },
+    }
 }
