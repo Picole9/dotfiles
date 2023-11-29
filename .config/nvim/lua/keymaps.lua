@@ -2,7 +2,7 @@
 vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "[File] [n]ew" })
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "[S]ave file" })
 -- number
-vim.keymap.set('n', '<F4>', ':set number! relativenumber!<CR>')
+vim.keymap.set('n', '<F5>', ':set number! relativenumber!<CR>')
 -- Move to window
 vim.keymap.set("n", "<C-Up>", "<C-w>h", { desc = "Go to left window", remap = true })
 vim.keymap.set("n", "<C-Down>", "<C-w>j", { desc = "Go to lower window", remap = true })
