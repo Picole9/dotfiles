@@ -15,7 +15,7 @@ vim.opt.fillchars = {
     diff = "╱",
     eob = " ",
 }
-vim.o.clipboard = 'unnamedplus'
+vim.o.clipboard = 'unnamed,unnamedplus'
 vim.o.undofile = true
 vim.wo.signcolumn = 'yes'
 vim.o.completeopt = 'menuone,noselect'
@@ -34,4 +34,3 @@ vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
-
