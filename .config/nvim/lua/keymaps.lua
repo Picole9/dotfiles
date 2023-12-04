@@ -3,10 +3,13 @@ vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "[File] [n]ew" })
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "[S]ave file" })
 -- number
 vim.keymap.set('n', '<F5>', ':set number! relativenumber!<CR>')
+-- tab visual mode
+vim.keymap.set('v', '<Tab>', '>gv', { desc = "tab right"})
+vim.keymap.set('v', '<S-Tab>', '<gv', { desc = "tab left"})
 -- Move to window
-vim.keymap.set("n", "<C-Up>", "<C-w>h", { desc = "Go to left window", remap = true })
+vim.keymap.set("n", "<C-Left>", "<C-w>h", { desc = "Go to left window", remap = true })
 vim.keymap.set("n", "<C-Down>", "<C-w>j", { desc = "Go to lower window", remap = true })
-vim.keymap.set("n", "<C-Left>", "<C-w>k", { desc = "Go to upper window", remap = true })
+vim.keymap.set("n", "<C-Up>", "<C-w>k", { desc = "Go to upper window", remap = true })
 vim.keymap.set("n", "<C-Right>", "<C-w>l", { desc = "Go to right window", remap = true })
 -- Resize window
 vim.keymap.set("n", "<C-S-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
