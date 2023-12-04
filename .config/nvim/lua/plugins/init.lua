@@ -14,4 +14,17 @@ return {
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {}
     },
+    {
+        "folke/edgy.nvim",
+        event = "VeryLazy",
+        opts = {
+            left = {
+                {
+                    title = "Files",
+                    ft = "oil",
+                    size = {width = 0.3}
+                }
+            }
+        }
+    },
 }
