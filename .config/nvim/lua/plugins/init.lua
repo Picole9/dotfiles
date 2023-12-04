@@ -14,10 +14,4 @@ return {
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {}
     },
-    { -- translations
-        "potamides/pantran.nvim",
-        opts = {
-            default_engine = "google"
-        },
-    }
 }
