@@ -19,6 +19,7 @@ return {
                 "query",
                 "vim",
                 "vimdoc",
+                "yaml",
             },
             sync_install = false,
             auto_install = true,
