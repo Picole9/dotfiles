@@ -11,6 +11,8 @@ return {
             'nvim-telescope/telescope.nvim',
             -- completion integration
             'hrsh7th/cmp-nvim-lsp',
+            -- status updates for LSP
+            { 'j-hui/fidget.nvim', opts = {} },
         },
         opts = {
             servers = {
@@ -28,6 +30,7 @@ return {
                 marksman = {}, -- markdown
                 bashls = {},
                 tsserver = {}, -- javascript
+                yamlls = {},
             },
         },
         config = function(_, opts)
@@ -47,7 +50,7 @@ return {
             end
 
             if have_mason then
-                mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
+                mlsp.setup({ ensure_installed = ensure_installed})
             end
 
             -- Use LspAttach autocommand to only map the following keys
@@ -75,9 +78,5 @@ return {
                 end,
             })
         end,
-    },
-    -- status updates for lsp
-    {
-        'j-hui/fidget.nvim', opts = {}
     },
 }
