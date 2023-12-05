@@ -17,14 +17,28 @@ return {
     {
         "folke/edgy.nvim",
         event = "VeryLazy",
+        init = function ()
+            vim.opt.splitkeep = "screen"
+        end,
         opts = {
-            left = {
+            bottom = {
                 {
-                    title = "Files",
-                    ft = "oil",
-                    size = {width = 0.3}
+                    ft = "lazyterm",
+                    title = "Terminal",
+                    size = { height = 0.4 },
+                    filter = function (buf)
+                        return not vim.b[buf].lazyterm_cmd
+                    end,
+                },
+                { ft = "qf", title = "Qickfix" },
+                {
+                    ft = "help",
+                    size = { height = 20 },
+                    filter = function(buf)
+                        return vim.bo[buf].buftype == "help"
+                    end,
                 }
-            }
+            },
         }
     },
 }
