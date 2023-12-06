@@ -9,36 +9,10 @@ return {
         main = "ibl",
         opts = {}
     },
-    { -- comment for todo, hack, warn, parf, note, test, fix
-        "folke/todo-comments.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        opts = {}
-    },
     {
-        "folke/edgy.nvim",
-        event = "VeryLazy",
-        init = function ()
-            vim.opt.splitkeep = "screen"
-        end,
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {
-            bottom = {
-                {
-                    ft = "lazyterm",
-                    title = "Terminal",
-                    size = { height = 0.4 },
-                    filter = function (buf)
-                        return not vim.b[buf].lazyterm_cmd
-                    end,
-                },
-                { ft = "qf", title = "Qickfix" },
-                {
-                    ft = "help",
-                    size = { height = 20 },
-                    filter = function(buf)
-                        return vim.bo[buf].buftype == "help"
-                    end,
-                }
-            },
-        }
+        },
     },
 }
