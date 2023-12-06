@@ -14,7 +14,7 @@ return {
                 padding = 10,
                 max_width = 40,
                 max_height = 0,
-                border = "rounded",
+                border = "none",
                 win_options = {
                     winblend = 0,
                 },
