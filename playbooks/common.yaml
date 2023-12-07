@@ -1,0 +1,9 @@
+- name: install common packages
+  hosts: all
+  vars:
+    nodejs_version: "21"
+  roles:
+    - common
+    - glow
+    - nvim
+    - fish

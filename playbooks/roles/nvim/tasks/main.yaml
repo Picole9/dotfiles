@@ -1,0 +1,16 @@
+- name: add repo
+  ansible.builtin.apt_repository:
+    repo: 'ppa:neovim-ppa/unstable'
+    state: present
+  become: true
+- name: install packages
+  ansible.builtin.apt: 
+    name: neovim
+    state: present
+    update_cache: true
+  become: true
+- name: copy config
+  ansible.builtin.copy:
+    src: ./
+    dest: "/home/{{ ansible_user_id }}/.config/nvim/"
+    mode: preserve

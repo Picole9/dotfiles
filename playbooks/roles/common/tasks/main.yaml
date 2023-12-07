@@ -1,0 +1,40 @@
+- name: install apt packages
+  become: true
+  apt:
+    update_cache: yes
+    name:
+      - bat # cat
+      - exa # ls
+      - ripgrep # grep
+      - fd-find # find
+      - btop # htop
+      - universal-ctags
+      - ca-certificates
+      - curl
+      - gnupg
+      # python
+      - python3-pip
+      - python3-venv
+- name: install pip-packages
+  ansible.builtin.pip:
+    name:
+      - tldr
+- name: add GPG keys for nodejs
+  become: true
+  ansible.builtin.get_url:
+    url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
+    dest: /etc/apt/keyrings/nodesource.asc
+    mode: '0644'
+    force: true
+- name: add nodejs-repo
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/nodesource.asc] https://deb.nodesource.com/node_{{ nodejs_version }}.x nodistro main"
+    filename: nodesource
+    state: present
+- name: install nodejs
+  become: true
+  apt:
+    name:
+      - nodejs
+    update_cache: true

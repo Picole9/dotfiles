@@ -1,10 +1,9 @@
 # dotfiles
-Sammlung von configs.
-Installation via `/bin/bash install.sh`
-Installation mit proxy `/bin/bash install.sh --proxy http://proxy-server.com`
+Sammlung von configs, installieren via ansible
+Installation von ansible via `sh install.sh`
+Installieren der config `ansible-playbook playbooks/common.yaml -i hosts --ask-become-pass`
 
-## .config
-* fish: shell
-* omv: plugin-manager of fish
-* nvim: editor
-* glow: terminal markdown-viewer
+## roles:
+* common: fishshell, nvim, ...
+* server: docker, qemu-guest-agent(proxmox)
+* update
