@@ -2,10 +2,12 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
-alias l='exa -lga --icons'
-alias bat='batcat'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias l='exa -lga --icons'
+alias bat='batcat --paging=never'
+alias fd='fdfind'
+alias t='tmux'
 
 # vi
 alias vi='nvim'
@@ -24,12 +26,17 @@ alias dlog='docker compose logs -f'
 # git
 alias gc='git commit -m'
 alias ga='git add'
+alias gac='git reset'
 alias gs='git status'
-alias gp='git push origin master'
+alias gd='git diff'
+alias gdt='git difftool'
+alias gp='git push'
 
 # python
 alias python='python3'
 alias py='python3'
+
+alias wetter='curl https://wttr.in/Bremen'
 
 set -gx EDITOR nvim
 set -gx PROJECT_PATHS ~/git ~/.config/
