@@ -1,1 +1,8 @@
-lazy-lock.json
+# nvim
+nvim/lazy-lock.json
+# fish
+fish/completions/
+fish/conf.d/
+fish/fish_variables
+fish/functions/
+fish/themes
