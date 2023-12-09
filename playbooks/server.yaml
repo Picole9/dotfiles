@@ -1,6 +1,0 @@
-- name: install common server packages
-  hosts: all
-  gather_facts: true
-  roles:
-    - docker
-    - qemu-guest-agent

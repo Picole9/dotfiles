@@ -40,7 +40,6 @@ alias wetter='curl https://wttr.in/Bremen'
 
 set -gx EDITOR nvim
 set -gx PROJECT_PATHS ~/git ~/.config/
-fish_add_path /home/$USER/.local/bin
 
 function fish_greeting
     echo \((date +%T)\) Moin $USER auf $hostname
