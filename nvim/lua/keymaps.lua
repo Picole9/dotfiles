@@ -1,5 +1,21 @@
+-- quit
+vim.keymap.set("n", "<leader>wq", ":wq<CR>", { desc = "[W]rite [Q]uit" })
+vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "[W]rite" })
+vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "[Q]uit" })
+vim.keymap.set("n", "<leader>q!", ":q!<CR>", { desc = "[Q]uit without save" })
+vim.keymap.set("n", "<leader>q1", ":q!<CR>", { desc = "[Q]uit without save" })
+-- abbrev
+vim.cmd("cnoreabbrev Q q")
+vim.cmd("cnoreabbrev Q! q!")
+vim.cmd("cnoreabbrev W w")
+vim.cmd("cnoreabbrev W! w!")
+vim.cmd("cnoreabbrev Wq wq")
+vim.cmd("cnoreabbrev WQ wq")
+-- back to normal mode
+vim.keymap.set("i", "jk", "<Esc>")
+vim.keymap.set("i", "kj", "<Esc>")
 -- file
-vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "[File] [n]ew" })
+vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "[File] [N]ew" })
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "[S]ave file" })
 -- number
 vim.keymap.set('n', '<F5>', ':set number! relativenumber!<CR>')
