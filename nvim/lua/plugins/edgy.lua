@@ -30,13 +30,13 @@ return {
                     end,
                 }
             },
-            left = {
-                {
-                    ft = "oil",
-                    title = "File Explorer",
-                    size = { width = 30 },
-                }
-            },
+            -- left = {
+            --     {
+            --         ft = "oil",
+            --         title = "File Explorer",
+            --         size = { width = 30 },
+            --     }
+            -- },
             right = {
                 {
                     ft = "tagbar",
