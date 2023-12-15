@@ -26,7 +26,15 @@ return {
                     }
                 },
                 html = {},
-                pyright = {},
+                pyright = {
+                    settings = {
+                        python = {
+                            analysis = {
+                                typeCheckingMode = "off"
+                            }
+                        }
+                    }
+                },
                 marksman = {}, -- markdown
                 bashls = {},
                 tsserver = {}, -- javascript
