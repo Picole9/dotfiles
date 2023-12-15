@@ -4,6 +4,10 @@ My own configuration files.
 * or install via ansible-repo
 * NOT MAINTAINED: install via `bash install.sh`
 
+# wezterm
+Configuration for wezterm-terminal
+* leader <Ctrl>a
+
 ## fish
 Configuration for fishshell
 * plugin-manager: fisher, usage `fisher install { repo }`, `fisher update`
