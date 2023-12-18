@@ -17,7 +17,7 @@ config.color_scheme = 'Gruvbox Dark (Gogh)'
 config.window_background_opacity = 0.97
 
 -- font
-config.font = wezterm.font('Hasklug NF', { weight = 'Regular' })
+config.font = wezterm.font('Hasklug Nerd Font', { weight = 'Regular' })
 config.font_size = 13.0
 
 -- other
@@ -31,8 +31,8 @@ wezterm.on('update-right-status', function(window, _)
     table.insert(cells, '  ' .. wezterm.strftime('%H:%M'))
     table.insert(cells, '  ' .. wezterm.strftime('%d.%m.%Y'))
     local discharging_icons =
-      { '', '', '', '', '', '', '', '', '', '' }
-    local charging_icons = { '', '', '', '', '', '', '', '', '', '' }
+      { '󰂃', '󰁺', '󰁻', '󰁼', '󰁽', '󰁾', '󰁿', '󰂀', '󰂁', '󰁹' }
+    local charging_icons = { '󰂃', '󰢜', '󰂆', '󰂇', '󰂈', '󰢝', '󰂉', '󰢞', '󰂊', '󰂋' }
     local charge = ''
     local icon = ''
     local round = function(x, increment)
@@ -47,7 +47,7 @@ wezterm.on('update-right-status', function(window, _)
     for _, b in ipairs(wezterm.battery_info()) do
         local idx = clamp(round(b.state_of_charge * 10), 1, 10)
         charge = string.format('%.0f%%', b.state_of_charge * 100)
-        if b.state == "charging" then
+        if b.state == "Charging" then
             icon = charging_icons[idx]
         else
             icon = discharging_icons[idx]
