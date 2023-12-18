@@ -16,19 +16,20 @@ end
 config.color_scheme = 'Gruvbox Dark (Gogh)'
 config.window_background_opacity = 0.97
 
-config.window_padding = { left = 10, right = 10, top = 10, bottom = 10 }
-
 -- font
-config.font = wezterm.font('DroidSansMono Nerd Font Mono', { weight = 'Regular' })
+config.font = wezterm.font('Hasklug NF', { weight = 'Regular' })
 config.font_size = 13.0
 
+-- other
+config.window_padding = { left = 10, right = 10, top = 10, bottom = 10 }
 config.scrollback_lines = 3500
+-- config.hide_tab_bar_if_only_one_tab = true
 
 -- statusline
 wezterm.on('update-right-status', function(window, _)
     local cells = {}
-    table.insert(cells, ' ' .. wezterm.strftime('%H:%M'))
-    table.insert(cells, ' ' .. wezterm.strftime('%d.%m.%Y'))
+    table.insert(cells, '  ' .. wezterm.strftime('%H:%M'))
+    table.insert(cells, '  ' .. wezterm.strftime('%d.%m.%Y'))
     local discharging_icons =
       { '', '', '', '', '', '', '', '', '', '' }
     local charging_icons = { '', '', '', '', '', '', '', '', '', '' }
@@ -51,8 +52,8 @@ wezterm.on('update-right-status', function(window, _)
         else
             icon = discharging_icons[idx]
         end
+        table.insert(cells, icon .. ' ' .. charge)
     end
-    table.insert(cells, icon .. ' ' .. charge)
 
     local elements = {}
     local fg = '#c0c0c0'
@@ -81,7 +82,6 @@ wezterm.on('update-right-status', function(window, _)
     end
     window:set_right_status(wezterm.format(elements))
 end)
--- config.hide_tab_bar_if_only_one_tab = true
 
 -- keybindings
 config.leader = { key="a", mods="CTRL", timeout_milliseconds=1000 }
