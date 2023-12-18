@@ -6,8 +6,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias l='exa -lga --icons'
 alias bat='batcat --paging=never'
-alias fd='fdfind'
 alias t='tmux'
+function fd
+    fdfind $1 -X batcat --paging=never
+end
 
 # vi
 alias vi='nvim'
@@ -31,6 +33,9 @@ alias gs='git status'
 alias gd='git diff'
 alias gdt='git difftool'
 alias gp='git push'
+function gdiff
+    git diff --name-only --relative --diff-filter=d $1 | xargs batcat --diff
+end
 
 # python
 alias python='python3'
