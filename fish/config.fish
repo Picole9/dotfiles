@@ -30,10 +30,9 @@ alias gc='git commit -m'
 alias ga='git add'
 alias gac='git reset'
 alias gs='git status'
-alias gd='git diff'
 alias gdt='git difftool'
 alias gp='git push'
-function gdiff
+function gd
     git diff --name-only --relative --diff-filter=d $1 | xargs batcat --diff
 end
 
