@@ -10,10 +10,28 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+-- functions
 local function basename(s)
     return string.gsub(s, '(.*[/\\])(.*)', '%2')
 end
-
+local round = function(x, increment)
+    if increment then
+        return round(x / increment) * increment
+    end
+    return x >= 0 and math.floor(x + 0.5) or math.ceil(x - 0.5)
+end
+local clamp = function(x, min, max)
+    return x < min and min or (x > max and max or x)
+end
+local darken = function(color, darkness)
+    local red = tonumber(color:sub(2,3), 16)
+    local green = tonumber(color:sub(4,5), 16)
+    local blue = tonumber(color:sub(6,7), 16)
+    red = math.floor(red * darkness)
+    green = math.floor(green * darkness)
+    blue = math.floor(blue * darkness)
+    return string.format("#%02X%02X%02X", red, green, blue)
+end
 
 -- This is where you actually apply your config choices
 
@@ -34,21 +52,13 @@ config.scrollback_lines = 3500
 wezterm.on('update-right-status', function(window, _)
     local cells = {}
     table.insert(cells, '  ' .. wezterm.strftime('%H:%M'))
+    table.insert(cells, 'KW: ' .. wezterm.strftime('%U'))
     table.insert(cells, '  ' .. wezterm.strftime('%d.%m.%Y'))
     local discharging_icons =
       { '󰂃', '󰁺', '󰁻', '󰁼', '󰁽', '󰁾', '󰁿', '󰂀', '󰂁', '󰁹' }
     local charging_icons = { '󰂃', '󰢜', '󰂆', '󰂇', '󰂈', '󰢝', '󰂉', '󰢞', '󰂊', '󰂋' }
     local charge = ''
     local icon = ''
-    local round = function(x, increment)
-        if increment then
-            return round(x / increment) * increment
-        end
-        return x >= 0 and math.floor(x + 0.5) or math.ceil(x - 0.5)
-    end
-    local clamp = function(x, min, max)
-        return x < min and min or (x > max and max or x)
-    end
     for _, b in ipairs(wezterm.battery_info()) do
         local idx = clamp(round(b.state_of_charge * 10), 1, 10)
         charge = string.format('%.0f%%', b.state_of_charge * 100)
@@ -62,11 +72,11 @@ wezterm.on('update-right-status', function(window, _)
 
     local elements = {}
     local fg = '#c0c0c0'
-    local bg = {
-        '#A04000',
-        '#873600',
-        '#6E2C00',
-    }
+    local bg_start = "#ba4a00"
+    local bg = {}
+    for i=0,10 do
+        bg[i] = darken(bg_start, 1-(i/10.0))
+    end
     local SOLID_LEFT_ARROW = utf8.char(0xe0b2)
     table.insert(elements, { Foreground = { Color = bg[1] }})
     table.insert(elements, { Text = SOLID_LEFT_ARROW })
@@ -98,18 +108,18 @@ wezterm.on(
         local exec_name = basename(tab.active_pane.foreground_process_name)
         if exec_name == "wsl.exe" or exec_name == "wslhost.exe" then
             icon = ""
+        elseif exec_name == "powershell.exe" then
+            icon = ""
+        elseif exec_name == "cmd.exe" then
+            icon = ""
         else
             icon = ""
         end
-        if tab.is_active then
-            return {
-                { Text = ' ' .. SUP_IDX[tab.tab_index+1] .. icon .. '  ' .. title .. ' ' },
-            }
-        end
-        return title
+        return {
+            { Text = ' ' .. SUP_IDX[tab.tab_index+1] .. icon .. '  ' .. title .. ' ' },
+        }
     end
 )
-
 
 -- keybindings
 config.leader = { key="a", mods="CTRL", timeout_milliseconds=1000 }
@@ -155,19 +165,23 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
                 'wsl.exe',
                 '-d',
                 'Ubuntu'
-            }
+            },
+            domain = { DomainName = "local"},
         },
         {
             label = 'Powershell',
             args = {
-                'powershell.exe'
-            }
+                'powershell.exe',
+                '-nologo'
+            },
+            domain = { DomainName = "local"},
         },
         {
             label = 'cmd',
             args = {
                 'cmd.exe'
-            }
+            },
+            domain = { DomainName = "local"},
         },
     }
 elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
