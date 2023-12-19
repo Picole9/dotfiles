@@ -10,6 +10,11 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+local function basename(s)
+    return string.gsub(s, '(.*[/\\])(.*)', '%2')
+end
+
+
 -- This is where you actually apply your config choices
 
 -- colorscheme
@@ -83,6 +88,29 @@ wezterm.on('update-right-status', function(window, _)
     window:set_right_status(wezterm.format(elements))
 end)
 
+local SUP_IDX = {"¹","²","³","⁴","⁵","⁶","⁷","⁸","⁹","¹⁰",
+                 "¹¹","¹²","¹³","¹⁴","¹⁵","¹⁶","¹⁷","¹⁸","¹⁹","²⁰"}
+wezterm.on(
+    'format-tab-title',
+    function(tab, _, _, _, _, _)
+        local title = tab.active_pane.title
+        local icon
+        local exec_name = basename(tab.active_pane.foreground_process_name)
+        if exec_name == "wsl.exe" or exec_name == "wslhost.exe" then
+            icon = ""
+        else
+            icon = ""
+        end
+        if tab.is_active then
+            return {
+                { Text = ' ' .. SUP_IDX[tab.tab_index+1] .. icon .. '  ' .. title .. ' ' },
+            }
+        end
+        return title
+    end
+)
+
+
 -- keybindings
 config.leader = { key="a", mods="CTRL", timeout_milliseconds=1000 }
 config.keys = {
@@ -114,6 +142,7 @@ config.keys = {
     {key="c", mods="LEADER", action="ShowLauncher"},
     {key="r", mods="LEADER", action="ReloadConfiguration"},
     {key="x", mods="LEADER", action=wezterm.action{CloseCurrentPane={confirm=true}}},
+    {key="d", mods="LEADER", action=wezterm.action.ShowDebugOverlay},
 }
 -- os-specific
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
