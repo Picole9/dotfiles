@@ -102,8 +102,11 @@ local SUP_IDX = {"¹","²","³","⁴","⁵","⁶","⁷","⁸","⁹","¹⁰",
                  "¹¹","¹²","¹³","¹⁴","¹⁵","¹⁶","¹⁷","¹⁸","¹⁹","²⁰"}
 wezterm.on(
     'format-tab-title',
-    function(tab, _, _, _, _, _)
-        local title = tab.active_pane.title
+    function(tab, _, _, _, _, max_width)
+        local title = tab.tab_title
+        if not title or #title == 0 then
+            title = tab.active_pane.title
+        end
         local icon
         local exec_name = basename(tab.active_pane.foreground_process_name)
         if exec_name == "wsl.exe" or exec_name == "wslhost.exe" then
@@ -115,8 +118,9 @@ wezterm.on(
         else
             icon = ""
         end
+        title = wezterm.truncate_right(' ' .. SUP_IDX[tab.tab_index+1] .. icon .. '  ' .. title .. ' ', max_width - 2)
         return {
-            { Text = ' ' .. SUP_IDX[tab.tab_index+1] .. icon .. '  ' .. title .. ' ' },
+            { Text =  title },
         }
     end
 )
@@ -129,30 +133,30 @@ config.keys = {
     {key="f", mods="CTRL", action=wezterm.action{Search={Regex=""}}},
     {key="c", mods="CTRL|SHIFT", action=wezterm.action{CopyTo="Clipboard"}},
     {key="v", mods="CTRL|SHIFT", action=wezterm.action{PasteFrom="Clipboard"}},
-    {key="h", mods="LEADER", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
-    {key="v", mods="LEADER", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
-    {key="LeftArrow", mods="LEADER", action=wezterm.action{ActivatePaneDirection="Left"}},
-    {key="RightArrow", mods="LEADER", action=wezterm.action{ActivatePaneDirection="Right"}},
-    {key="DownArrow", mods="LEADER", action=wezterm.action{ActivatePaneDirection="Down"}},
-    {key="UpArrow", mods="LEADER", action=wezterm.action{ActivatePaneDirection="Up"}},
-    {key="z", mods="LEADER", action="TogglePaneZoomState"},
-    {key="q", mods="LEADER", action="QuickSelect"},
-    {key="1", mods="LEADER", action=wezterm.action{ActivateTab=0}},
-    {key="2", mods="LEADER", action=wezterm.action{ActivateTab=1}},
-    {key="3", mods="LEADER", action=wezterm.action{ActivateTab=2}},
-    {key="4", mods="LEADER", action=wezterm.action{ActivateTab=3}},
-    {key="5", mods="LEADER", action=wezterm.action{ActivateTab=4}},
-    {key="6", mods="LEADER", action=wezterm.action{ActivateTab=5}},
-    {key="7", mods="LEADER", action=wezterm.action{ActivateTab=6}},
-    {key="8", mods="LEADER", action=wezterm.action{ActivateTab=7}},
-    {key="9", mods="LEADER", action=wezterm.action{ActivateTab=8}},
-    {key="l", mods="LEADER", action="ActivateLastTab"},
-    {key="t", mods="LEADER", action="ShowTabNavigator"},
-    {key="n", mods="LEADER", action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
-    {key="c", mods="LEADER", action="ShowLauncher"},
-    {key="r", mods="LEADER", action="ReloadConfiguration"},
-    {key="x", mods="LEADER", action=wezterm.action{CloseCurrentPane={confirm=true}}},
-    {key="d", mods="LEADER", action=wezterm.action.ShowDebugOverlay},
+    {key="h", mods="ALT", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
+    {key="v", mods="ALT", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
+    {key="LeftArrow", mods="ALT", action=wezterm.action{ActivatePaneDirection="Left"}},
+    {key="RightArrow", mods="ALT", action=wezterm.action{ActivatePaneDirection="Right"}},
+    {key="DownArrow", mods="ALT", action=wezterm.action{ActivatePaneDirection="Down"}},
+    {key="UpArrow", mods="ALT", action=wezterm.action{ActivatePaneDirection="Up"}},
+    {key="z", mods="ALT", action="TogglePaneZoomState"},
+    {key="q", mods="ALT", action="QuickSelect"},
+    {key="1", mods="ALT", action=wezterm.action{ActivateTab=0}},
+    {key="2", mods="ALT", action=wezterm.action{ActivateTab=1}},
+    {key="3", mods="ALT", action=wezterm.action{ActivateTab=2}},
+    {key="4", mods="ALT", action=wezterm.action{ActivateTab=3}},
+    {key="5", mods="ALT", action=wezterm.action{ActivateTab=4}},
+    {key="6", mods="ALT", action=wezterm.action{ActivateTab=5}},
+    {key="7", mods="ALT", action=wezterm.action{ActivateTab=6}},
+    {key="8", mods="ALT", action=wezterm.action{ActivateTab=7}},
+    {key="9", mods="ALT", action=wezterm.action{ActivateTab=8}},
+    {key="l", mods="ALT", action="ActivateLastTab"},
+    {key="t", mods="ALT", action="ShowTabNavigator"},
+    {key="n", mods="ALT", action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
+    {key="c", mods="ALT", action="ShowLauncher"},
+    {key="r", mods="ALT", action="ReloadConfiguration"},
+    {key="x", mods="ALT", action=wezterm.action{CloseCurrentPane={confirm=true}}},
+    {key="d", mods="ALT", action=wezterm.action.ShowDebugOverlay},
 }
 -- os-specific
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
