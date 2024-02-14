@@ -52,9 +52,10 @@ config.default_prog = { '/usr/bin/fish', '-l' }
 
 -- statusline
 wezterm.on('update-right-status', function(window, _)
+    -- define elements per cell
     local cells = {}
     table.insert(cells, '  ' .. wezterm.strftime('%H:%M'))
-    table.insert(cells, 'KW: ' .. wezterm.strftime('%U'))
+    table.insert(cells, 'KW: ' .. wezterm.strftime('%V'))
     table.insert(cells, '  ' .. wezterm.strftime('%d.%m.%Y'))
     local discharging_icons =
       { '󰂃', '󰁺', '󰁻', '󰁼', '󰁽', '󰁾', '󰁿', '󰂀', '󰂁', '󰁹' }
@@ -71,7 +72,7 @@ wezterm.on('update-right-status', function(window, _)
         end
         table.insert(cells, icon .. ' ' .. charge)
     end
-
+    -- print all cells
     local elements = {}
     local fg = '#c0c0c0'
     local bg_start = "#ba4a00"
