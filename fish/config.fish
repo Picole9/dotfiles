@@ -2,14 +2,22 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
-alias ..='cd ..'
-alias ...='cd ../..'
+# .. to cd ../, ... to cd ../../ etc.
+function multicd
+    echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
+end
+abbr --add dotdot --regex '^\.\.+$' --function multicd
+
 alias l='exa -lga --icons'
 alias bat='batcat --paging=never'
 alias t='tmux'
 function fd
     fdfind $1 -X batcat --paging=never
 end
+
+# expands !! to the last history item
+function last_history_item; echo $history[1]; end
+abbr -a !! --position anywhere --function last_history_item
 
 # vi
 alias vi='nvim'
