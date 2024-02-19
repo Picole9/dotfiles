@@ -6,7 +6,8 @@ My own configuration files.
 
 # wezterm
 Configuration for wezterm-terminal
-* leader <Ctrl>a
+* openweathermap-integration: set env-variable `API_OWM={API_KEY}`
+* leader <Alt>
 
 ## fish
 Configuration for fishshell
