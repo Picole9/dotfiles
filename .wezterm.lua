@@ -1,4 +1,3 @@
--- Pull in the wezterm API
 local wezterm = require 'wezterm'
 
 -- This table will hold the configuration.
@@ -14,16 +13,16 @@ end
 local function basename(s)
     return string.gsub(s, '(.*[/\\])(.*)', '%2')
 end
-local round = function(x, increment)
+local function round(x, increment)
     if increment then
         return round(x / increment) * increment
     end
     return x >= 0 and math.floor(x + 0.5) or math.ceil(x - 0.5)
 end
-local clamp = function(x, min, max)
+local function clamp(x, min, max)
     return x < min and min or (x > max and max or x)
 end
-local darken = function(color, darkness)
+local function darken(color, darkness)
     local red = tonumber(color:sub(2,3), 16)
     local green = tonumber(color:sub(4,5), 16)
     local blue = tonumber(color:sub(6,7), 16)
@@ -32,7 +31,53 @@ local darken = function(color, darkness)
     blue = math.floor(blue * darkness)
     return string.format("#%02X%02X%02X", red, green, blue)
 end
+-- only supports http-proxy
+local function get_proxy()
+    if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+        local _, ProxyEnable, _ = wezterm.run_child_process({"powershell.exe", "(Get-ItemProperty -Path 'Registry::HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings').ProxyEnable"})
+        if ProxyEnable:gsub("%s+", "") == "1" then
+            local _, ProxyServer, _ = wezterm.run_child_process({"powershell.exe", "((Get-ItemProperty -Path 'Registry::HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings').ProxyServer | Select-String -Pattern '([a-zA-Z0-9._-]+\\.?)*:\\d+').Matches[0].Value"})
+            if ProxyServer ~= "" then
+                ProxyServer = "http://" .. ProxyServer:gsub("%c", "")
+                return ProxyServer
+            end
+        end
+    elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
+        return os.getenv("http_proxy")
+    end
+    return nil
+end
 
+local function get_weather(cityid)
+    local API_OWM = os.getenv("API_OWM")
+    if API_OWM then
+        local proxy = get_proxy()
+        local success, stdout = nil, nil
+        if proxy ~= nil then
+            success, stdout, _ = wezterm.run_child_process({"curl", "-sf", "-x", proxy, "http://api.openweathermap.org/data/2.5/weather?id=" .. cityid .. "&units=metric&appid=" .. API_OWM})
+        else
+            success, stdout, _ = wezterm.run_child_process({"curl", "-sf", "http://api.openweathermap.org/data/2.5/weather?id=" .. cityid .. "&units=metric&appid=" .. API_OWM})
+        end
+        local weather_icon = nil
+        local weather_temp = nil
+        local icons = {
+            ["01"] = "☀",
+            ["02"] = "🌤",
+            ["03"] = "🌥",
+            ["04"] = "☁",
+            ["09"] = "🌧",
+            ["10"] = "🌦",
+            ["11"] = "🌩",
+            ["13"] = "🌨",
+            ["50"] = "🌫",
+        }
+        if success and stdout then
+            weather_icon = icons[string.sub(wezterm.json_parse(stdout).weather[1].icon, 1, 2)]
+            weather_temp = wezterm.json_parse(stdout).main.temp
+        end
+        return weather_icon .. weather_temp .. "°C"
+    end
+end
 -- This is where you actually apply your config choices
 
 -- colorscheme
@@ -54,6 +99,11 @@ config.default_prog = { '/usr/bin/fish', '-l' }
 wezterm.on('update-right-status', function(window, _)
     -- define elements per cell
     local cells = {}
+    local cityid = 2944388 -- Bremen
+    local weather = get_weather(cityid)
+    if weather then
+        table.insert(cells, weather)
+    end
     table.insert(cells, '  ' .. wezterm.strftime('%H:%M'))
     table.insert(cells, 'KW: ' .. wezterm.strftime('%V'))
     table.insert(cells, '  ' .. wezterm.strftime('%d.%m.%Y'))
