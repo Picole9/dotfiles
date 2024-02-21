@@ -73,7 +73,7 @@ local function get_weather(cityid)
         }
         if success and stdout then
             weather_icon = icons[string.sub(wezterm.json_parse(stdout).weather[1].icon, 1, 2)]
-            weather_temp = wezterm.json_parse(stdout).main.temp
+            weather_temp = round(wezterm.json_parse(stdout).main.temp, 1)
         end
         return weather_icon .. weather_temp .. "°C"
     end
