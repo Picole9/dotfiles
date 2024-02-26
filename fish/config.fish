@@ -41,7 +41,7 @@ alias gs='git status'
 alias gdt='git difftool'
 alias gp='git push'
 function gd
-    git diff --name-only --relative --diff-filter=d $1 | xargs batcat --diff
+    git diff --name-only --relative --diff-filter=d $argv[1] | xargs batcat --diff
 end
 
 # python
