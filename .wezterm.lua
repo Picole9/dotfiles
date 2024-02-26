@@ -96,11 +96,10 @@ config.default_prog = { '/usr/bin/fish', '-l' }
 -- config.hide_tab_bar_if_only_one_tab = true
 
 -- statusline
+local weather = get_weather(2944388) -- Bremen
 wezterm.on('update-right-status', function(window, _)
     -- define elements per cell
     local cells = {}
-    local cityid = 2944388 -- Bremen
-    local weather = get_weather(cityid)
     if weather then
         table.insert(cells, weather)
     end
