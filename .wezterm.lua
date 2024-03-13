@@ -230,6 +230,15 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
             domain = { DomainName = "local"},
         },
         {
+            label = 'Manjaro',
+            args = {
+                'wsl.exe',
+                '-d',
+                'Manjaro'
+            },
+            domain = { DomainName = "local"},
+        },
+        {
             label = 'Powershell',
             args = {
                 'powershell.exe',
