@@ -9,11 +9,8 @@ end
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 
 alias l='exa -lga --icons'
-alias bat='batcat --paging=never'
+alias bat='bat --paging=never'
 alias t='tmux'
-function fd
-    fdfind $1 -X batcat --paging=never
-end
 
 # expands !! to the last history item
 function last_history_item; echo $history[1]; end
@@ -41,7 +38,7 @@ alias gs='git status'
 alias gdt='git difftool'
 alias gp='git push'
 function gd
-    git diff --name-only --relative --diff-filter=d $argv[1] | xargs batcat --diff
+    git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
 end
 
 # python
@@ -52,6 +49,8 @@ alias wetter='curl https://wttr.in/Bremen'
 
 set -gx EDITOR nvim
 set -gx PROJECT_PATHS ~/git ~/.config/
+
+fish_add_path $HOME/.local/bin
 
 function fish_greeting
     echo \((date +%T)\) Moin $USER auf $hostname
