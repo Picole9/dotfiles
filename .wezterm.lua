@@ -218,23 +218,23 @@ config.keys = {
 -- os-specific
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
     -- domain
-    config.default_domain = 'WSL:Ubuntu'
+    config.default_domain = 'WSL:Manjaro'
     config.launch_menu = {
-        {
-            label = 'Ubuntu',
-            args = {
-                'wsl.exe',
-                '-d',
-                'Ubuntu'
-            },
-            domain = { DomainName = "local"},
-        },
         {
             label = 'Manjaro',
             args = {
                 'wsl.exe',
                 '-d',
                 'Manjaro'
+            },
+            domain = { DomainName = "local"},
+        },
+        {
+            label = 'Ubuntu',
+            args = {
+                'wsl.exe',
+                '-d',
+                'Ubuntu'
             },
             domain = { DomainName = "local"},
         },
