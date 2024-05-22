@@ -7,6 +7,7 @@ return {
             ensure_installed = {
                 "bash",
                 "dockerfile",
+                "diff",
                 "fish",
                 "html",
                 "javascript",
@@ -16,6 +17,7 @@ return {
                 "query",
                 "vim",
                 "vimdoc",
+                "xml",
                 "yaml",
             },
             sync_install = false,
@@ -24,6 +26,9 @@ return {
             indent = { enable = true },
             autotag = { enable = true },
         },
+        config = function(_, opts)
+            require("nvim-treesitter.configs").setup(opts)
+        end,
     },
     -- autopair
     {
