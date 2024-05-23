@@ -24,7 +24,7 @@ return {
                     return conf
                 end,
             },
-            vim.keymap.set("n", "<F3>", "<cmd>lua require('oil').toggle_float()<cr>", { desc="file explorer" })
+            vim.keymap.set("n", "<leader><F3>", "<cmd>lua require('oil').toggle_float()<cr>", { desc="file explorer" })
         },
     },
 }
