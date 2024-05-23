@@ -3,8 +3,31 @@ return {
     { -- lsp-config
         "neovim/nvim-lspconfig",
         dependencies = {
-            -- lsp-manager
-            { "williamboman/mason.nvim", opts = {} },
+            { -- lsp-manager
+                "williamboman/mason.nvim",
+                opts = {
+                    ensure_installed = {
+                        "ansible-lint",
+                    },
+                },
+                config = function(_, opts)
+                    require("mason").setup(opts)
+                    local mr = require("mason-registry")
+                    local function ensure_installed()
+                        for _, tool in ipairs(opts.ensure_installed) do
+                            local p = mr.get_package(tool)
+                            if not p:is_installed() then
+                                p:install()
+                            end
+                        end
+                    end
+                    if mr.refresh() then
+                        mr.refresh(ensure_installed)
+                    else
+                        ensure_installed()
+                    end
+                end
+            },
             -- server-configs
             "williamboman/mason-lspconfig.nvim",
             -- telescope integration
@@ -16,6 +39,11 @@ return {
         },
         opts = {
             servers = {
+                ansiblels = {},
+                bashls = {},
+                dockerls = {},
+                html = {},
+                jsonls = {},
                 lua_ls = {
                     settings = {
                         Lua = {
@@ -25,7 +53,7 @@ return {
                         }
                     }
                 },
-                html = {},
+                marksman = {}, -- markdown
                 pyright = {
                     settings = {
                         python = {
@@ -35,8 +63,6 @@ return {
                         }
                     }
                 },
-                marksman = {}, -- markdown
-                bashls = {},
                 tsserver = {}, -- javascript
                 yamlls = {},
             },
@@ -53,7 +79,9 @@ return {
                     server_opts = server_opts == true and {} or server_opts
                     server_opts.capabilities = capabilities
                     lspconfig[server].setup(server_opts)
-                    ensure_installed[#ensure_installed + 1] = server
+                    if server_opts.enabled ~= false then
+                        ensure_installed[#ensure_installed + 1] = server
+                    end
                 end
             end
 
