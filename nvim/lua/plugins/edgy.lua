@@ -31,27 +31,22 @@ return {
                     end,
                 }
             },
-            {
-                title = "Neo-Tree",
-                ft = "neo-tree",
-                filter = function(buf)
-                    return vim.b[buf].neo_tree_source == "filesystem"
-                end,
-                size = { height = 0.5 },
-            },
-            -- left = {
-            --     {
-            --         ft = "oil",
-            --         title = "File Explorer",
-            --         size = { width = 30 },
-            --     }
-            -- },
-            right = {
+            left = {
+                {
+                    title = "Neo-Tree",
+                    ft = "neo-tree",
+                    filter = function(buf)
+                        return vim.b[buf].neo_tree_source == "filesystem"
+                    end,
+                    size = { height = 0.5 },
+                },
                 {
                     ft = "tagbar",
                     title = "Tagbar",
                     size = { width = 30 },
                 },
+            },
+            right = {
             },
         }
     },
