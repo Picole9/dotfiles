@@ -37,3 +37,10 @@ vim.keymap.set("n", "<S-Left>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 vim.keymap.set("n", "<S-Right>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 -- Clear search with <esc>
 vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
+-- IDE-view
+vim.keymap.set("n", "<F2>", function()
+    require("codewindow").toggle_minimap()
+    vim.cmd('Neotree toggle')
+    vim.cmd('TroubleToggle')
+    vim.cmd('TagbarToggle')
+end, { desc = "IDE-View"})

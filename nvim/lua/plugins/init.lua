@@ -12,14 +12,6 @@ return {
     {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        keys = {
-            {
-                "<leader>tr",
-                "<CMD>Trouble<CR>",
-                desc = "[tr]ouble"
-            },
-        },
-        opts = {
-        },
+        opts = {},
     },
 }
