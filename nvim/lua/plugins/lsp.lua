@@ -56,12 +56,18 @@ return {
                 marksman = {}, -- markdown
                 pyright = {
                     settings = {
+                        pyright = {
+                            disableOrganizeImports = true,
+                        },
                         python = {
                             analysis = {
-                                typeCheckingMode = "off"
+                                ignore = { '*' }
                             }
                         }
                     }
+                },
+                ruff_lsp = {
+                    settings = { args = {} }
                 },
                 tsserver = {}, -- javascript
                 yamlls = {},
@@ -99,18 +105,17 @@ return {
 
                     -- Buffer local mappings.
                     -- See `:help vim.lsp.*` for documentation on any of the below functions
-                    local opts = { buffer = ev.buf }
-                    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-                    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-                    vim.keymap.set('n', '<leader>gd', require('telescope.builtin').lsp_definitions, opts)
-                    vim.keymap.set('n', '<leader>i', require('telescope.builtin').lsp_implementations, opts)
-                    vim.keymap.set('n', '<leader>d', require('telescope.builtin').lsp_type_definitions, opts)
-                    vim.keymap.set('n', '<leader>s', require('telescope.builtin').lsp_document_symbols, opts)
-                    vim.keymap.set('n', '<leader>r', require('telescope.builtin').lsp_references, opts)
-                    vim.keymap.set({ 'n', 'v' }, '<leader>c', vim.lsp.buf.code_action, opts)
+                    vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "buf.hover", buffer = ev.buf })
+                    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { desc = "buf.signature", buffer = ev.buf })
+                    vim.keymap.set('n', '<leader>gd', require('telescope.builtin').lsp_definitions, { desc = "lsp_definitions", buffer = ev.buf })
+                    vim.keymap.set('n', '<leader>i', require('telescope.builtin').lsp_implementations, { desc = "lsp_implementations", buffer = ev.buf })
+                    vim.keymap.set('n', '<leader>d', require('telescope.builtin').lsp_type_definitions, { desc = "lsp_type_definitions", buffer = ev.buf })
+                    vim.keymap.set('n', '<leader>s', require('telescope.builtin').lsp_document_symbols, { desc = "lsp_document_symbols", buffer = ev.buf })
+                    vim.keymap.set('n', '<leader>r', require('telescope.builtin').lsp_references, { desc = "lsp_references", buffer = ev.buf })
+                    vim.keymap.set({ 'n', 'v' }, '<leader>c', vim.lsp.buf.code_action, { desc = "code action", buffer = ev.buf })
                     vim.keymap.set('n', '<leader>f', function()
                         vim.lsp.buf.format { async = true }
-                    end, opts)
+                    end, { desc = "buf.format", buffer = ev.buf })
                 end,
             })
         end,
