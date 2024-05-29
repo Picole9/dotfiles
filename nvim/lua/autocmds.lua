@@ -9,6 +9,22 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     pattern = '*',
 })
 
+-- close some filetypes with <q>
+local close_with_q = vim.api.nvim_create_augroup('close_with_q', { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+    group = close_with_q,
+    pattern = {
+        "help",
+        "lspinfo",
+        "qf",
+        "checkhealth",
+    },
+    callback = function(event)
+        vim.bo[event.buf].buflisted = false
+        vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    end,
+})
+
 -- ansible-detection
 if vim.filetype then
     vim.filetype.add({
@@ -21,8 +37,8 @@ if vim.filetype then
             [".*/roles/.*/handlers/.*%.yaml"] = "yaml.ansible",
         }
     })
-    else
-    vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+else
+    vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         pattern = {
             "*/playbooks/*.yml",
             "*/playbooks/*.yaml",
