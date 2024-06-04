@@ -27,3 +27,6 @@ Configuration for neovim-editor (nvim >= 0.10)
     * lua/keymaps: neovim-keymaps
     * lua/options: neovim-options
     * lua/plugins: plugins via lazy-pluginmanager
+
+## conky
+Configuration for customizing desktops
