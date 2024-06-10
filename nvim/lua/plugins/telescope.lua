@@ -31,6 +31,7 @@ return {
 			vim.keymap.set("n", "<leader>tl", require("telescope.builtin").live_grep, { desc = "[L]ive grep" })
 			vim.keymap.set("n", "<leader>td", require("telescope.builtin").diagnostics, { desc = "[D]iagnostics" })
 			vim.keymap.set("n", "<leader>tr", require("telescope.builtin").resume, { desc = "[R]esume" })
+			vim.keymap.set("n", "<leader>tk", "<cmd>Telescope keymaps<cr>", { desc = "[K]eymaps" })
 			vim.keymap.set("n", "<leader>tu", "<cmd>Telescope undo<cr>", { desc = "[U]ndo tree" })
 		end,
 	},
