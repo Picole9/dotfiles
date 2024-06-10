@@ -107,10 +107,6 @@ return {
 				callback = function(ev)
 					-- Enable completion triggered by <c-x><c-o>
 					vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-
-					-- Buffer local mappings.
-					-- See `:help vim.lsp.*` for documentation on any of the below functions
-					vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "buf.hover", buffer = ev.buf })
 					vim.keymap.set(
 						"n",
 						"<C-k>",
