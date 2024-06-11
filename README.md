@@ -35,7 +35,8 @@ Configuration for neovim-editor (nvim >= 0.10)
                 "nvim-treesitter/nvim-treesitter",
                 opts = {
                     ensure_installed = {
-                        "php" }
+                        "php"
+                    }
                 },
             },
             {
