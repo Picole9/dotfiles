@@ -27,6 +27,35 @@ Configuration for neovim-editor (nvim >= 0.10)
     * lua/keymaps: neovim-keymaps
     * lua/options: neovim-options
     * lua/plugins: plugins via lazy-pluginmanager
+* local override: `nvim/lua/plugins/override.lua` 
+    * example adding php-language:
+        ```lua
+        return {
+            {
+                "nvim-treesitter/nvim-treesitter",
+                opts = {
+                    ensure_installed = {
+                        "php" }
+                },
+            },
+            {
+                "neovim/nvim-lspconfig",
+                opts = {
+                    servers = {
+                        intelephense = {
+                            settings = {
+                                intelephense = {
+                                    telemetry = {
+                                        enabled = false
+                                    }
+                                }
+                            }
+                        },
+                    }
+                },
+            },
+        }
+        ``` 
 
 ## conky
 Configuration for customizing desktops
