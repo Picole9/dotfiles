@@ -47,7 +47,7 @@ end
 alias python='python3'
 alias py='python3'
 
-function pyenv
+function pyenv -d "create venv"
     python3 -m venv .venv
     source .venv/bin/activate.fish
     if test -e "requirements.txt"
