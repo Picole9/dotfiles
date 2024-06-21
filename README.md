@@ -2,11 +2,11 @@
 My own configuration files.
 * install for e.g. fish: `ln -sf /path/to/repo/fish/ ~/.config/fish`
 * or install via ansible-repo
-* NOT MAINTAINED: install via `bash install.sh`
 
 # wezterm
 Configuration for wezterm-terminal
-* openweathermap-integration: set env-variable `API_OWM={API_KEY}`
+* weather-data from dwd
+    * curl in windows doesnt build with libz, `set_curl.bat` installs the right curl via winget (requirement winget). Copy `set_curl.bat` in `%userprofile%\\set_curl.bat`
 * leader \<Alt\>
 
 ## fish
@@ -59,4 +59,4 @@ Configuration for neovim-editor (nvim >= 0.10)
         ``` 
 
 ## conky
-Configuration for customizing desktops
+Configuration for customized desktop
