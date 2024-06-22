@@ -56,19 +56,23 @@ end
 
 local function get_weather(cityid)
 	local proxy = get_proxy()
+    local curl = "curl"
+    if proxy ~= nil then
+        print("proxy settings found")
+    end
 	local success, stdout, stderr = nil, nil, nil
-	local curl = "curl"
 	if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-		success, _, _ = wezterm.run_child_process({ "curl", "--version|findstr", '/C:"libz">nul' })
+		success, _, _ = wezterm.run_child_process({ curl, "--version", "|", "findstr", '/C:"libz">nul' })
 		if not success then
 			local path = os.getenv("USERPROFILE")
+			print(curl .. " does not support libz. Try to install curl...")
 			success, stdout, _ = wezterm.run_child_process({ path .. "/set_curl.bat" })
+			curl = stdout:gsub("\\", "\\\\")
+		    success, _, _ = wezterm.run_child_process({ curl, "--version", "|", "findstr", '/C:"libz">nul' })
 			if not success then
-				print("curl does not support libz. exiting...")
+				print(curl .. " does not support libz. exiting...")
 				return nil
 			end
-			curl =
-				"C:\\Users\\ospecht\\AppData\\Local\\Microsoft\\WinGet\\Packages\\cURL.cURL_Microsoft.Winget.Source_8wekyb3d8bbwe\\curl-8.8.0_2-win64-mingw\\bin\\curl.exe"
 		end
 	end
 	if proxy ~= nil then
