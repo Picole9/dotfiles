@@ -6,7 +6,7 @@ My own configuration files.
 # wezterm
 Configuration for wezterm-terminal
 * weather-data from dwd
-    * curl in windows doesnt build with libz, `set_curl.bat` installs the right curl via winget (requirement winget). Copy `set_curl.bat` in `%userprofile%\\set_curl.bat`
+    * curl in windows does not build nativly with libz. install another one via e.g. `winget install curl.curl` first
 * leader \<Alt\>
 
 ## fish

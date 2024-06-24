@@ -56,23 +56,23 @@ end
 
 local function get_weather(cityid)
 	local proxy = get_proxy()
-    local curl = "curl"
-    if proxy ~= nil then
-        print("proxy settings found")
-    end
+	local curl = "curl"
+	if proxy ~= nil then
+		print("proxy settings found")
+	end
 	local success, stdout, stderr = nil, nil, nil
 	if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-		success, _, _ = wezterm.run_child_process({ curl, "--version", "|", "findstr", '/C:"libz">nul' })
-		if not success then
-			local path = os.getenv("USERPROFILE")
-			print(curl .. " does not support libz. Try to install curl...")
-			success, stdout, _ = wezterm.run_child_process({ path .. "/set_curl.bat" })
-			curl = stdout:gsub("\\", "\\\\")
-		    success, _, _ = wezterm.run_child_process({ curl, "--version", "|", "findstr", '/C:"libz">nul' })
-			if not success then
-				print(curl .. " does not support libz. exiting...")
-				return nil
+		success, stdout, _ = wezterm.run_child_process({ "where", "curl" })
+		for line in stdout:gmatch("[^\r\n]+") do
+			curl = line:gsub("\\", "\\\\")
+			success, stdout, _ = wezterm.run_child_process({ curl, "--version" })
+			if stdout:find("libz") then
+				break
 			end
+		end
+		if not stdout:find("libz") then
+			print("no valid curl found. weather cannot be retrieved.")
+			return nil
 		end
 	end
 	if proxy ~= nil then
