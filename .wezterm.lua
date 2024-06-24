@@ -141,7 +141,7 @@ local function get_weather(cityid)
 		}
 		local weather_icon = icons[wezterm.json_parse(stdout).icon]
 		local weather_temp = wezterm.json_parse(stdout).temperature / 10
-		return weather_icon .. weather_temp .. "°C (" .. wezterm.time.now():format("%H:%M") .. ")"
+		return weather_icon .. weather_temp .. "°C"
 	end
 	print(stderr)
 	return nil
