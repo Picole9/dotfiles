@@ -9,7 +9,11 @@ end
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 
 alias l='exa -lga --icons'
-alias bat='bat --paging=never'
+if test (cat /etc/os-release | grep -i debian)
+    alias bat='batcat --paging=never'
+else    
+    alias bat='bat --paging=never'
+end
 alias t='tmux'
 
 # expands !! to the last history item
@@ -40,7 +44,11 @@ alias gs='git status'
 alias gdt='git difftool'
 alias gp='git push'
 function gd
-    git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
+    if test (cat /etc/os-release | grep -i debian)
+        git diff --name-only --relative --diff-filter=d $argv | xargs batcat --diff
+    else
+        git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
+    end
 end
 
 # python
