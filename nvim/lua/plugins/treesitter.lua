@@ -44,11 +44,4 @@ return {
 			check_ts = true,
 		},
 	},
-	-- Automatically add end keywords for Ruby, Lua, Python, and more
-	"RRethy/nvim-treesitter-endwise",
-	-- Autoclose and autorename HTML and Vue tags
-	{
-		"windwp/nvim-ts-autotag",
-		opts = {},
-	},
 }
