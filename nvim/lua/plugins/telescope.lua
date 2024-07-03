@@ -22,17 +22,20 @@ return {
 				undo = {},
 			},
 		},
+		cmd = "Telescope",
+		keys = {
+			{ "<leader>tg", "<cmd>Telescope git_files<cr>", { desc = "[G]it files" } },
+			{ "<leader>tf", "<cmd>Telescope find_files<cr>", { desc = "search [F]iles" } },
+			{ "<leader>th", "<cmd>Telescope help_tags<cr>", { desc = "[H]elp tags" } },
+			{ "<leader>ts", "<cmd>Telescope grep_string<cr>", { desc = "grep [S]tring" } },
+			{ "<leader>tl", "<cmd>Telescope live_grep<cr>", { desc = "[L]ive grep" } },
+			{ "<leader>td", "<cmd>Telescope diagnostics<cr>", { desc = "[D]iagnostics" } },
+			{ "<leader>tr", "<cmd>Telescope resume<cr>", { desc = "[R]esume" } },
+			{ "<leader>tk", "<cmd>Telescope keymaps<cr>", { desc = "[K]eymaps" } },
+			{ "<leader>tu", "<cmd>Telescope undo<cr>", { desc = "[U]ndo tree" } },
+		},
 		config = function()
 			require("telescope").load_extension("undo")
-			vim.keymap.set("n", "<leader>tg", require("telescope.builtin").git_files, { desc = "[G]it files" })
-			vim.keymap.set("n", "<leader>tf", require("telescope.builtin").find_files, { desc = "search [F]iles" })
-			vim.keymap.set("n", "<leader>th", require("telescope.builtin").help_tags, { desc = "[H]elp tags" })
-			vim.keymap.set("n", "<leader>ts", require("telescope.builtin").grep_string, { desc = "grep [S]tring" })
-			vim.keymap.set("n", "<leader>tl", require("telescope.builtin").live_grep, { desc = "[L]ive grep" })
-			vim.keymap.set("n", "<leader>td", require("telescope.builtin").diagnostics, { desc = "[D]iagnostics" })
-			vim.keymap.set("n", "<leader>tr", require("telescope.builtin").resume, { desc = "[R]esume" })
-			vim.keymap.set("n", "<leader>tk", "<cmd>Telescope keymaps<cr>", { desc = "[K]eymaps" })
-			vim.keymap.set("n", "<leader>tu", "<cmd>Telescope undo<cr>", { desc = "[U]ndo tree" })
 		end,
 	},
 }
