@@ -8,11 +8,13 @@ function multicd
 end
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 
-alias l='exa -lga --icons'
+alias l='eza -lga --icons'
 if test (cat /etc/os-release | grep -i debian)
     alias bat='batcat --paging=never'
+    alias bathelp='batcat --plain --language=help'
 else    
     alias bat='bat --paging=never'
+    alias bathelp='bat --plain --language=help'
 end
 alias t='tmux'
 
@@ -24,25 +26,28 @@ abbr -a !! --position anywhere --function last_history_item
 
 # vi
 alias vi='nvim'
-function vissh
+function vissh -d "oil-ssh://$argv"
     nvim oil-ssh://$argv
 end
 
 # docker
 alias dc='docker compose'
-alias dcl='docker compose ps'
+alias dcps='docker compose ps'
 alias dcd='docker compose down'
 alias dcu='docker compose up -d --remove-orphans'
+alias dcl='docker compose logs -f --tail 100'
+alias dce='docker compose exec'
+alias dcb='docker compose build'
 alias dprune='docker system prune -a'
-alias dlog='docker compose logs -f'
 
 # git
 alias gc='git commit -m'
+alias gcr='git reset --soft HEAD~1'
 alias ga='git add'
-alias gac='git reset'
 alias gs='git status'
 alias gdt='git difftool'
-alias gp='git push'
+alias gpull='git pull --rebase'
+alias gpush='git push'
 function gd
     if test (cat /etc/os-release | grep -i debian)
         git diff --name-only --relative --diff-filter=d $argv | xargs batcat --diff
@@ -52,8 +57,7 @@ function gd
 end
 
 # python
-alias python='python3'
-alias py='python3'
+alias py='python'
 
 function pyenv -d "create venv"
     python3 -m venv .venv
