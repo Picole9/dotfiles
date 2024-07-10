@@ -9,6 +9,7 @@ return {
 				opts = {
 					ensure_installed = {
 						"ansible-lint",
+						"prettier",
 						"shfmt",
 						"stylua",
 					},
@@ -139,13 +140,13 @@ return {
 					)
 					vim.keymap.set(
 						"n",
-						"<leader>tr",
+						"<leader>tR",
 						require("telescope.builtin").lsp_references,
 						{ desc = "lsp_references", buffer = ev.buf }
 					)
 					vim.keymap.set(
 						{ "n", "v" },
-						"<leader>a",
+						"<leader>c",
 						vim.lsp.buf.code_action,
 						{ desc = "[C]ode action", buffer = ev.buf }
 					)
