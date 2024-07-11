@@ -9,5 +9,5 @@ return {
 	branch = "regexp",
 	cmd = "VenvSelect",
 	opts = {},
-	keys = { { "<leader>v", "<cmd>:VenvSelect<cr>", desc = "[V]irtualEnv select", ft = "python" } },
+	keys = { { "<leader>tv", "<cmd>:VenvSelect<cr>", desc = "[V]irtualEnv select", ft = "python" } },
 }
