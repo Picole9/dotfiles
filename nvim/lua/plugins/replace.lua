@@ -9,13 +9,13 @@ return {
 				optional = true,
 				opts = {
 					defaults = {
-						["<leader>r"] = { name = "[R]eplace" },
+						{ "<leader>r", group = "[R]eplace" },
 					},
 				},
 			},
 		},
 		keys = {
-			{ "<leader>rs", "<CMD>SearchReplaceSingleBufferOpen<CR>", desc = "[R]eplace and [s]earch" },
+			{ "<leader>rs", "<CMD>SearchReplaceSingleBufferOpen<CR>", desc = "[R]eplace" },
 			{
 				"<leader>rv",
 				"<CMD>SearchReplaceWithinVisualSelection<CR>",

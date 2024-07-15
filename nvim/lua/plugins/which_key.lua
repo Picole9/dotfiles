@@ -2,6 +2,9 @@ return {
 	-- popup for keybindings
 	{
 		"folke/which-key.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
 		event = "VeryLazy",
 		init = function()
 			vim.o.timeout = true
@@ -14,7 +17,7 @@ return {
 		config = function(_, opts)
 			local wk = require("which-key")
 			wk.setup(opts)
-			wk.register(opts.defaults)
+			wk.add(opts.defaults)
 		end,
 	},
 }
