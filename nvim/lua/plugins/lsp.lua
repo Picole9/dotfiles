@@ -75,7 +75,7 @@ return {
 				ruff_lsp = {
 					settings = { args = {} },
 				},
-				tsserver = {}, -- javascript
+				ts_ls = {}, -- javascript
 				yamlls = {},
 			},
 		},
