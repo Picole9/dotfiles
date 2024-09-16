@@ -11,10 +11,8 @@ return {
 			sections = {
 				lualine_c = {
 					function()
-						local clients
-						clients = vim.lsp.get_active_clients()
 						local clients_list = {}
-						for _, client in pairs(clients) do
+						for _, client in pairs(vim.lsp.buf_get_clients(vim.api.nvim_get_current_buf())) do
 							table.insert(clients_list, client.name)
 						end
 						for _, formatter in pairs(require("conform").formatters_by_ft[vim.bo.filetype]) do
