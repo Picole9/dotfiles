@@ -12,7 +12,7 @@ return {
 				lualine_c = {
 					function()
 						local clients_list = {}
-						for _, client in pairs(vim.lsp.buf_get_clients(vim.api.nvim_get_current_buf())) do
+						for _, client in pairs(vim.lsp.get_clients()) do
 							table.insert(clients_list, client.name)
 						end
 						for _, formatter in pairs(require("conform").formatters_by_ft[vim.bo.filetype]) do
