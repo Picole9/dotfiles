@@ -72,7 +72,7 @@ return {
 						},
 					},
 				},
-				ruff_lsp = {
+				ruff = {
 					settings = { args = {} },
 				},
 				ts_ls = {}, -- javascript
