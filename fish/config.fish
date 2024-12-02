@@ -17,6 +17,7 @@ else
     alias bathelp='bat --plain --language=help'
 end
 alias py='python3'
+alias nsl='nslookup'
 
 # expands !! to the last history item
 function last_history_item
@@ -39,6 +40,10 @@ alias dcl='docker compose logs -f --tail 100'
 alias dce='docker compose exec'
 alias dcb='docker compose build'
 alias dprune='docker system prune -a'
+
+# kubernetes
+alias k='kubectl'
+alias mk='minikube'
 
 # git
 alias gc='git commit -m'
