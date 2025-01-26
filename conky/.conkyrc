@@ -1,0 +1,46 @@
+conky.config = {
+	use_xft = true,
+	font = 'Zekton:size=10',
+
+	own_window = true,
+	own_window_type = 'normal',
+	own_window_transparent = true,
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+	own_window_colour = '#000000',
+	own_window_argb_visual = true,
+	own_window_argb_value = 0,
+
+	double_buffer = true,
+	minimum_width = 300, minimum_height = 412,
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	default_color = 'white',
+	default_shade_color = 'black',
+	default_outline_color = 'green',
+	alignment = 'top_right',
+	gap_x = 40,
+	gap_y = 50,
+	no_buffers = true,
+	uppercase = false,
+	cpu_avg_samples = 2,
+	net_avg_samples = 1,
+	override_utf8_locale = true
+};
+
+conky.text = [[
+${goto 220}${voffset -8}${color}${font Zekton:style=bold:size=12}Specht${font}
+${alignc 30}${voffset 22}Temp:
+${alignc 30}${hwmon 4 temp 2}°C
+${alignr 300}${voffset 60}${font Zekton:style=bold:size=35}${time %H:%M}${font}
+${alignc -53}${voffset -5}Akku
+${alignc -53}${battery_percent BAT1}%
+${alignc 70}${voffset 37}CPU
+${alignc 70}${cpu}%
+${alignc -10}${voffset -35}${color}RAM
+${alignc -10}${memperc}%
+${alignc 30}${voffset 27}HD
+${alignc 30}${fs_used_perc /}%
+
+${image /home/specht/.config/conky/lsd.png -p 34,0 -s 255x412}
+]];
