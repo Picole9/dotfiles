@@ -1,6 +1,7 @@
 # nvim
 nvim/lazy-lock.json
 nvim/lua/plugins/override.lua
+.netrwhist
 # fish
 fish/completions/
 fish/conf.d/
