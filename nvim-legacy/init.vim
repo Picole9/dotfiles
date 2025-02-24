@@ -67,4 +67,3 @@ set showmode
 set laststatus=2
 set fillchars+=eob:\ 
 set mouse=a
-set filetype on
