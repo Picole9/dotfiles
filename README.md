@@ -56,7 +56,10 @@ Configuration for neovim-editor (nvim >= 0.10)
                 },
             },
         }
-        ``` 
+        ```
+
+## nvim-legacy
+simple configuration for old neovim
 
 ## conky
 Configuration for customized desktop
