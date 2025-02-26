@@ -54,7 +54,32 @@ endif
 " -------------------------------------------------------
 " mappings
 " -------------------------------------------------------
+" filemanager
 noremap <F3> :Lexplore<CR>
+" back to normal mode
+inoremap jk <Esc>
+inoremap kj <Esc>
+" number
+noremap <F5> :set number! relativenumber!<CR>
+" tab visual mode
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+" Move to window
+noremap <C-Left> <cmd>wincmd h<cr>
+noremap <C-Down> <cmd>wincmd j<cr>
+noremap <C-Up> <cmd>wincmd k<cr>
+noremap <C-Right> <cmd>wincmd l<cr>
+" Resize window
+noremap <C-S-Up> <cmd>resize +2<cr>
+noremap <C-S-Down> <cmd>resize -2<cr>
+noremap <C-S-Left> <cmd>vertical resize -2<cr>
+noremap <C-S-Right> <cmd>vertical resize +2<cr>
+" buffers
+noremap <S-Left> <cmd>bprevious<cr>
+noremap <S-Right> <cmd>bnext<cr>
+" Clear search with <esc>
+noremap <esc> <cmd>noh<cr><esc>
+
 
 " -------------------------------------------------------
 " other settings
