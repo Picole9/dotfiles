@@ -2,19 +2,28 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
+# get OS
+set OS (awk -F= '/^ID=/{print $2}' /etc/os-release | tr -d '"')
+
 # .. to cd ../, ... to cd ../../ etc.
 function multicd
     echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
 end
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 
-alias l='eza -lga --icons'
-if test (cat /etc/os-release | grep -i debian)
-    alias bat='batcat --paging=never'
-    alias bathelp='batcat --plain --language=help'
-else
-    alias bat='bat --paging=never'
-    alias bathelp='bat --plain --language=help'
+if command -v eza >/dev/null
+    alias l='eza -lga --icons'
+else if command -v exa >/dev/null
+    alias l='exa -lga --icons'
+end
+
+switch OS
+    case debian
+        alias bat='batcat --paging=never'
+        alias bathelp='batcat --plain --language=help'
+    case "*"
+        alias bat='bat --paging=never'
+        alias bathelp='bat --plain --language=help'
 end
 alias py='python3'
 alias nsl='nslookup'
@@ -55,10 +64,11 @@ alias gpull='git pull --rebase'
 alias gp='git push'
 alias gpush='git push'
 function gd
-    if test (cat /etc/os-release | grep -i debian)
-        git diff --name-only --relative --diff-filter=d $argv | xargs batcat --diff
-    else
-        git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
+    switch OS
+        case debian
+            git diff --name-only --relative --diff-filter=d $argv | xargs batcat --diff
+        case "*"
+            git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
     end
 end
 
