@@ -56,6 +56,12 @@ endif
 " -------------------------------------------------------
 " filemanager
 noremap <F3> :Lexplore<CR>
+" quit
+noremap <leader>wq :wq<CR>
+noremap <leader>w :w<CR>
+noremap <leader>q :q<CR>
+noremap <leader>q! :q!<CR>
+noremap <leader>q1 :q!<CR>
 " back to normal mode
 inoremap jk <Esc>
 inoremap kj <Esc>
@@ -93,4 +99,5 @@ set showmode
 set laststatus=2
 set fillchars+=eob:\ 
 set mouse=a
+set mapleader=' '
 runtime commentary.vim "comment-plugin
