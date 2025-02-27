@@ -93,3 +93,4 @@ set showmode
 set laststatus=2
 set fillchars+=eob:\ 
 set mouse=a
+runtime commentary.vim "comment-plugin
