@@ -1,3 +1,15 @@
+syntax on
+set encoding=utf-8
+set number relativenumber
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab autoindent
+set incsearch ignorecase smartcase hlsearch
+set showmode
+set laststatus=2
+set fillchars+=eob:\ 
+set mouse=a
+let mapleader=' '
+let localmapleader=' '
+runtime commentary.vim "comment-plugin
 " -------------------------------------------------------
 " colorscheme
 " -------------------------------------------------------
@@ -85,19 +97,3 @@ noremap <S-Left> <cmd>bprevious<cr>
 noremap <S-Right> <cmd>bnext<cr>
 " Clear search with <esc>
 noremap <esc> <cmd>noh<cr><esc>
-
-
-" -------------------------------------------------------
-" other settings
-" -------------------------------------------------------
-syntax on
-set encoding=utf-8
-set number relativenumber
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab autoindent
-set incsearch ignorecase smartcase hlsearch
-set showmode
-set laststatus=2
-set fillchars+=eob:\ 
-set mouse=a
-set mapleader=' '
-runtime commentary.vim "comment-plugin
