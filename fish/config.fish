@@ -40,6 +40,18 @@ function vissh -d "oil-ssh://$argv"
     nvim oil-ssh://$argv
 end
 
+# wait for ssh
+function ssh_wait
+    set success 1 # Startwert, damit die Schleife läuft
+    while test $success -ne 0
+        ssh $argv
+        set success $status
+        if test $success -ne 0
+            sleep 5
+        end
+    end
+end
+
 # docker
 alias dc='docker compose'
 alias dcps='docker compose ps'
@@ -48,6 +60,8 @@ alias dcu='docker compose up -d --remove-orphans'
 alias dcl='docker compose logs -f --tail 100'
 alias dce='docker compose exec'
 alias dcb='docker compose build'
+alias dcs='docker compose stats'
+alias dcr='docker compose down && docker compose up -d'
 alias dprune='docker system prune -a'
 
 # kubernetes
