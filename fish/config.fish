@@ -11,6 +11,12 @@ function multicd
 end
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 
+# expands !! to the last history item
+function last_history_item
+    echo $history[1]
+end
+abbr -a !! --position anywhere --function last_history_item
+
 if command -v eza >/dev/null
     alias l='eza -lga --icons'
 else if command -v exa >/dev/null
@@ -19,37 +25,17 @@ end
 
 switch OS
     case debian
-        alias bat='batcat --paging=never'
-        alias bathelp='batcat --plain --language=help'
-    case "*"
-        alias bat='bat --paging=never'
-        alias bathelp='bat --plain --language=help'
+        alias bat='batcat'
 end
 alias py='python3'
 alias nsl='nslookup'
-
-# expands !! to the last history item
-function last_history_item
-    echo $history[1]
-end
-abbr -a !! --position anywhere --function last_history_item
+alias bathelp='bat --plain --language=help'
+alias cat='bat --plain --paging=never'
 
 # vi
 alias vi='nvim'
 function vissh -d "oil-ssh://$argv"
     nvim oil-ssh://$argv
-end
-
-# wait for ssh
-function ssh_wait
-    set success 1 # Startwert, damit die Schleife läuft
-    while test $success -ne 0
-        ssh $argv
-        set success $status
-        if test $success -ne 0
-            sleep 5
-        end
-    end
 end
 
 # docker
@@ -71,7 +57,7 @@ alias mk='minikube'
 
 # git
 alias gc='git commit -m'
-alias gcr='git reset --soft HEAD~1'
+alias gcr='git reset HEAD~1'
 alias ga='git add'
 alias gs='git status'
 alias gdt='git difftool'
@@ -79,12 +65,7 @@ alias gpull='git pull --rebase'
 alias gp='git push'
 alias gpush='git push'
 function gd
-    switch OS
-        case debian
-            git diff --name-only --relative --diff-filter=d $argv | xargs batcat --diff
-        case "*"
-            git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
-    end
+    git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
 end
 
 # vi mode
@@ -143,6 +124,18 @@ function get_cert -d "get x509 cert from url; get_cert {domain} [port:443]"
             case '*'
                 echo no valid input
                 continue
+        end
+    end
+end
+
+# wait for ssh
+function ssh_wait
+    set success 1 # Startwert, damit die Schleife läuft
+    while test $success -ne 0
+        ssh $argv
+        set success $status
+        if test $success -ne 0
+            sleep 5
         end
     end
 end
