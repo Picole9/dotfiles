@@ -3,7 +3,7 @@ if status is-interactive
 end
 
 # get OS
-set OS (awk -F= '/^ID=/{print $2}' /etc/os-release | tr -d '"')
+set OS (awk -F= '/^ID_LIKE=/{print $2}' /etc/os-release | tr -d '"')
 
 # .. to cd ../, ... to cd ../../ etc.
 function multicd
@@ -23,7 +23,7 @@ else if command -v exa >/dev/null
     alias l='exa -lga --icons'
 end
 
-switch OS
+switch $OS
     case debian
         alias bat='batcat'
 end
@@ -65,7 +65,12 @@ alias gpull='git pull --rebase'
 alias gp='git push'
 alias gpush='git push'
 function gd
-    git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
+    switch $OS
+        case debian
+            git diff --name-only --relative --diff-filter=d $argv | xargs batcat --diff
+        case '*'
+            git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
+    end
 end
 
 # vi mode
