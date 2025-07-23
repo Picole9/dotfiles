@@ -49,6 +49,7 @@ alias dce='docker compose exec'
 alias dcb='docker compose build'
 alias dcs='docker compose stats'
 alias dcp='docker compose pull'
+alias dip="docker ps -q | xargs -n 1 docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} {{ .Name }}' | sed 's/ \// /'"
 alias dprune='docker system prune -a --volumes'
 
 # kubernetes
