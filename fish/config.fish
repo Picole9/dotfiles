@@ -3,7 +3,7 @@ if status is-interactive
 end
 
 # get OS
-set OS (awk -F= '/^ID_LIKE=/{print $2}' /etc/os-release | tr -d '"')
+set OS (awk -F= '/^ID=/{print $2}' /etc/os-release | tr -d '"')
 
 # .. to cd ../, ... to cd ../../ etc.
 function multicd
@@ -17,22 +17,29 @@ function last_history_item
 end
 abbr -a !! --position anywhere --function last_history_item
 
+# l for eza/exa
 if command -v eza >/dev/null
     alias l='eza -lga --icons'
+    alias lt='eza -aT --level 3 --icons'
 else if command -v exa >/dev/null
     alias l='exa -lga --icons'
+    alias lt='exa -aT --level 3 --icons'
 end
 
 switch $OS
-    case debian
+    case ubuntu
         alias bat='batcat'
 end
 alias py='python3'
 alias nsl='nslookup'
 alias bathelp='bat --plain --language=help'
 alias cat='bat --plain --paging=never'
+alias jctl='journalctl -p 3 -xb'
+alias space='df -h'
+alias spacedir='du -sh *'
 
 # vi
+set -gx EDITOR nvim
 alias vi='nvim'
 function vissh -d "oil-ssh://$argv"
     nvim oil-ssh://$argv
@@ -53,7 +60,7 @@ alias dip="docker ps -q | xargs -n 1 docker inspect --format '{{range .NetworkSe
 alias dprune='docker system prune -a --volumes'
 
 # kubernetes
-alias k='kubectl'
+alias k='kubecolor'
 alias mk='minikube'
 
 # git
@@ -67,7 +74,7 @@ alias gp='git push'
 alias gpush='git push'
 function gd
     switch $OS
-        case debian
+        case ubuntu
             git diff --name-only --relative --diff-filter=d $argv | xargs batcat --diff
         case '*'
             git diff --name-only --relative --diff-filter=d $argv | xargs bat --diff
@@ -80,17 +87,27 @@ function fish_user_key_bindings
     bind -M insert -m default jk backward-char force-repaint
 end
 
+switch $OS
+    case manjaro
+        alias mirror='pacman-mirrors -c Germany'
+    case cachyos
+        alias mirror='cachyos-rate-mirrors'
+end
+
 alias wetter='curl https://wttr.in/Bremen'
 
-set -gx EDITOR nvim
+# pj-plugin
 set -gx PROJECT_PATHS ~/git ~/.config/
 
+# Append common directories for executable files to $PATH
 fish_add_path $HOME/.local/bin
 
+# greeting
 function fish_greeting
     echo \((date +%T)\) Moin $USER auf $hostname
 end
 
+# additional config in localconf.fish
 if test -e ~/.config/fish/localconf.fish
     source ~/.config/fish/localconf.fish
 end
