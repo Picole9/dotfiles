@@ -81,6 +81,10 @@ function gd
     end
 end
 
+# wireguard
+alias wgu='wg-quick up wg0'
+alias wgd='wg-quick down wg0'
+
 # vi mode
 function fish_user_key_bindings
     fish_vi_key_bindings
