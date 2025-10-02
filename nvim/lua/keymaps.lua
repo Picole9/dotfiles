@@ -19,6 +19,10 @@ vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "[File] [N]ew" })
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "[S]ave file" })
 -- number
 vim.keymap.set("n", "<F5>", ":set number! relativenumber!<CR>")
+vim.keymap.set("n", "<F5>", function()
+	vim.cmd("set number! relativenumber!")
+	vim.cmd("Precognition toggle")
+end, { desc = "toggle signs" })
 -- tab visual mode
 vim.keymap.set("v", "<Tab>", ">gv", { desc = "tab right" })
 vim.keymap.set("v", "<S-Tab>", "<gv", { desc = "tab left" })
@@ -37,10 +41,6 @@ vim.keymap.set("n", "<S-Left>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 vim.keymap.set("n", "<S-Right>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 -- Clear search with <esc>
 vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
--- IDE-view
-vim.keymap.set("n", "<F2>", function()
-	require("codewindow").toggle_minimap()
-	vim.cmd("Neotree toggle")
-	vim.cmd("Trouble diagnostics toggle")
-	vim.cmd("TagbarToggle")
-end, { desc = "IDE-View" })
+-- change and paste
+vim.keymap.set("n", "<leader>r", "cw<C-r>0<esc>", { desc = "change word and paste yanked" })
+vim.keymap.set("n", "<F2>", "<cmd>Trouble diagnostics toggle<cr>", { desc = "toggle diagnostics" })
