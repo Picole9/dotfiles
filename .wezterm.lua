@@ -49,7 +49,7 @@ local function get_proxy()
 			end
 		end
 	elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
-		return os.getenv("http_proxy")
+		return os.getenv("https_proxy")
 	end
 	return nil
 end
@@ -254,6 +254,10 @@ wezterm.on("format-tab-title", function(tab, _, _, _, _, max_width)
 		icon = ""
 	elseif exec_name == "cmd.exe" then
 		icon = ""
+	elseif exec_name == "bash" then
+		icon = "$"
+	elseif exec_name == "fish" then
+		icon = "󰈺"
 	else
 		icon = ""
 	end
@@ -271,8 +275,16 @@ config.keys = {
 	{ key = "f", mods = "CTRL", action = wezterm.action({ Search = { Regex = "" } }) },
 	{ key = "c", mods = "CTRL|SHIFT", action = wezterm.action({ CopyTo = "Clipboard" }) },
 	{ key = "v", mods = "CTRL|SHIFT", action = wezterm.action({ PasteFrom = "Clipboard" }) },
-	{ key = "h", mods = "ALT", action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
-	{ key = "v", mods = "ALT", action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+	{
+		key = "v",
+		mods = "ALT",
+		action = wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }),
+	},
+	{
+		key = "h",
+		mods = "ALT",
+		action = wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }),
+	},
 	{ key = "LeftArrow", mods = "ALT", action = wezterm.action({ ActivatePaneDirection = "Left" }) },
 	{ key = "RightArrow", mods = "ALT", action = wezterm.action({ ActivatePaneDirection = "Right" }) },
 	{ key = "DownArrow", mods = "ALT", action = wezterm.action({ ActivatePaneDirection = "Down" }) },
@@ -291,62 +303,61 @@ config.keys = {
 	{ key = "t", mods = "ALT", action = wezterm.action.ShowTabNavigator },
 	{ key = "n", mods = "ALT", action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }) },
 	{ key = "c", mods = "ALT", action = wezterm.action.ShowLauncher },
-	{ key = "u", mods = "ALT", action = wezterm.action.CharSelect{copy_on_select=true, copy_to='ClipboardAndPrimarySelection' }},
+	{
+		key = "u",
+		mods = "ALT",
+		action = wezterm.action.CharSelect({ copy_on_select = true, copy_to = "ClipboardAndPrimarySelection" }),
+	},
 	{ key = "r", mods = "ALT", action = wezterm.action.ReloadConfiguration },
 	{ key = "x", mods = "ALT", action = wezterm.action({ CloseCurrentPane = { confirm = true } }) },
 	{ key = "o", mods = "ALT", action = wezterm.action.ShowDebugOverlay },
 	{ key = "z", mods = "ALT", action = wezterm.action.TogglePaneZoomState },
 	{ key = "+", mods = "ALT", action = wezterm.action.IncreaseFontSize },
 	{ key = "-", mods = "ALT", action = wezterm.action.DecreaseFontSize },
-	{ key = "w", mods = "ALT", action = wezterm.action.AdjustPaneSize{'Up', 5} },
-	{ key = "s", mods = "ALT", action = wezterm.action.AdjustPaneSize{'Down', 5} },
-	{ key = "a", mods = "ALT", action = wezterm.action.AdjustPaneSize{'Left', 5} },
-	{ key = "d", mods = "ALT", action = wezterm.action.AdjustPaneSize{'Right', 5} },
-	{ key = "q", mods = "ALT", action = wezterm.action.RotatePanes 'CounterClockwise' },
-	{ key = "e", mods = "ALT", action = wezterm.action.RotatePanes 'Clockwise' },
+	{ key = "w", mods = "ALT", action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
+	{ key = "s", mods = "ALT", action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
+	{ key = "a", mods = "ALT", action = wezterm.action.AdjustPaneSize({ "Left", 5 }) },
+	{ key = "d", mods = "ALT", action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
+	{ key = "q", mods = "ALT", action = wezterm.action.RotatePanes("CounterClockwise") },
+	{ key = "e", mods = "ALT", action = wezterm.action.RotatePanes("Clockwise") },
 	{ key = "PageUp", mods = "ALT", action = wezterm.action.ScrollByPage(-1) },
 	{ key = "PageDown", mods = "ALT", action = wezterm.action.ScrollByPage(1) },
 }
 -- os-specific
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	-- domain
 	config.default_domain = "WSL:Manjaro"
 	config.launch_menu = {
-		{
-			label = "Manjaro",
-			args = {
-				"wsl.exe",
-				"-d",
-				"Manjaro",
-			},
-			domain = { DomainName = "local" },
-		},
-		{
-			label = "Ubuntu",
-			args = {
-				"wsl.exe",
-				"-d",
-				"Ubuntu",
-			},
-			domain = { DomainName = "local" },
-		},
 		{
 			label = "Powershell",
 			args = {
 				"powershell.exe",
 				"-nologo",
 			},
-			domain = { DomainName = "local" },
 		},
 		{
 			label = "cmd",
 			args = {
 				"cmd.exe",
 			},
-			domain = { DomainName = "local" },
 		},
 	}
 elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
+	config.launch_menu = {
+		{
+			label = "Bash",
+			args = {
+				"bash",
+				"-l",
+			},
+		},
+		{
+			label = "Fish",
+			args = {
+				"fish",
+				"-l",
+			},
+		},
+	}
 end
 -- and finally, return the configuration to wezterm
 return config
