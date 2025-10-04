@@ -2,8 +2,7 @@ return {
 	-- file explorer as buffer
 	{
 		"stevearc/oil.nvim",
-		---@module 'oil'
-		---@type oil.SetupOpts
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
 			default_file_explorer = true,
 			use_default_keymaps = true,
@@ -14,11 +13,14 @@ return {
 				padding = 2,
 				max_width = 80,
 				max_height = 40,
-				preview_split = "auto",
+				preview_split = "right",
 			},
-			vim.keymap.set("n", "<F3>", "<cmd>lua require('oil').toggle_float()<cr>", { desc = "Oil file explorer" }),
+			vim.keymap.set(
+				"n",
+				"<leader><F3>",
+				"<cmd>lua require('oil').toggle_float()<cr>",
+				{ desc = "file explorer" }
+			),
 		},
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		lazy = false,
 	},
 }
