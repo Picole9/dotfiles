@@ -40,6 +40,7 @@ alias spacedir='du -sh *'
 
 # vi
 set -gx EDITOR nvim
+set -gx VISUAL nvim
 alias vi='nvim'
 function vissh -d "oil-ssh://$argv"
     nvim oil-ssh://$argv
@@ -102,6 +103,16 @@ alias wetter='curl https://wttr.in/Bremen'
 
 # pj-plugin
 set -gx PROJECT_PATHS ~/git ~/.config/
+
+# fzf
+if command -v fzf >/dev/null
+    fzf --fish | source
+end
+
+# zoxide
+if command -v zoxide >/dev/null
+    zoxide init fish | source
+end
 
 # Append common directories for executable files to $PATH
 fish_add_path $HOME/.local/bin
