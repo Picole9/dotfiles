@@ -5,20 +5,32 @@ return {
 		---@module 'oil'
 		---@type oil.SetupOpts
 		opts = {
-			default_file_explorer = true,
-			use_default_keymaps = true,
 			view_options = {
 				show_hidden = true,
 			},
 			float = {
 				padding = 2,
-				max_width = 80,
+				max_width = 160,
 				max_height = 40,
 				preview_split = "auto",
 			},
-			vim.keymap.set("n", "<F3>", "<cmd>lua require('oil').toggle_float()<cr>", { desc = "Oil file explorer" }),
 		},
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		lazy = false,
+		keys = {
+			{
+				"<F3>",
+				function()
+					-- require("oil").toggle_float()
+					-- SOURCE : https://github.com/stevearc/oil.nvim/issues/657
+					if vim.w.is_oil_win then
+						require("oil").close()
+					else
+						require("oil").open_float(nil, { preview = {} })
+					end
+				end,
+				desc = "Oil file explorer",
+			},
+		},
 	},
 }
