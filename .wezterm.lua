@@ -160,7 +160,6 @@ config.font_size = 13.0
 config.window_padding = { left = 10, right = 10, top = 10, bottom = 10 }
 config.scrollback_lines = 3500
 config.adjust_window_size_when_changing_font_size = false
-config.default_prog = { "/usr/bin/fish", "-l" }
 -- config.hide_tab_bar_if_only_one_tab = true
 
 -- statusline
@@ -325,7 +324,7 @@ config.keys = {
 }
 -- os-specific
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	config.default_domain = "WSL:Manjaro"
+	-- config.default_domain = "WSL:archlinux"
 	config.launch_menu = {
 		{
 			label = "Powershell",
@@ -333,12 +332,14 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 				"powershell.exe",
 				"-nologo",
 			},
+			domain = { DomainName = "local" },
 		},
 		{
 			label = "cmd",
 			args = {
 				"cmd.exe",
 			},
+			domain = { DomainName = "local" },
 		},
 	}
 elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
