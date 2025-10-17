@@ -324,6 +324,7 @@ config.keys = {
 }
 -- os-specific
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+	-- config.ssh_backend = "Ssh2"
 	-- config.default_domain = "WSL:archlinux"
 	config.launch_menu = {
 		{
