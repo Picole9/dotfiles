@@ -329,7 +329,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 		{
 			label = "Powershell",
 			args = {
-				"powershell.exe",
+				"pwsh.exe",
 				"-nologo",
 			},
 			domain = { DomainName = "local" },
