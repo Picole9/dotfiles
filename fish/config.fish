@@ -31,8 +31,8 @@ switch $OS
         alias bat='batcat'
 end
 alias py='python3'
+alias uvr='uv run'
 alias nsl='nslookup'
-alias bathelp='bat --plain --language=help'
 alias cat='bat --plain --paging=never'
 alias jctl='journalctl -p 3 -xb'
 alias space='df -h'
@@ -113,6 +113,11 @@ end
 if command -v zoxide >/dev/null
     zoxide init fish | source
 end
+
+# man
+abbr -a --position anywhere -- --help '--help | bat -plhelp'
+abbr -a --position anywhere -- -h '-h | bat -plhelp'
+set -gx MANPAGER "sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
 
 # Append common directories for executable files to $PATH
 fish_add_path $HOME/.local/bin
