@@ -19,11 +19,11 @@ abbr -a !! --position anywhere --function last_history_item
 
 # l for eza/exa
 if command -v eza >/dev/null
-    alias l='eza -lga --icons'
-    alias lt='eza -aT --level 3 --icons'
+    alias l='eza -lga --icons=auto'
+    alias lt='eza -aT --level 3 --icons=auto'
 else if command -v exa >/dev/null
-    alias l='exa -lga --icons'
-    alias lt='exa -aT --level 3 --icons'
+    alias l='exa -lga --icons=auto'
+    alias lt='exa -aT --level 3 --icons=auto'
 end
 
 switch $OS
