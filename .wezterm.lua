@@ -34,20 +34,12 @@ end
 -- only supports http-proxy
 local function get_proxy()
 	if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-		local _, ProxyEnable, _ = wezterm.run_child_process({
-			"powershell.exe",
-			"(Get-ItemProperty -Path 'Registry::HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings').ProxyEnable",
+		local _, proxy, _ = wezterm.run_child_process({
+			"pwsh.exe",
+			"-C",
+			"[System.Net.WebRequest]::GetSystemWebProxy().GetProxy([Uri]'http://wezterm.org').OriginalString",
 		})
-		if ProxyEnable:gsub("%s+", "") == "1" then
-			local _, ProxyServer, _ = wezterm.run_child_process({
-				"powershell.exe",
-				"((Get-ItemProperty -Path 'Registry::HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings').ProxyServer | Select-String -Pattern '([a-zA-Z0-9._-]+\\.?)*:\\d+').Matches[0].Value",
-			})
-			if ProxyServer ~= "" then
-				ProxyServer = "http://" .. ProxyServer:gsub("%c", "")
-				return ProxyServer
-			end
-		end
+		return proxy:gsub("%s", "")
 	elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
 		return os.getenv("https_proxy")
 	end
@@ -58,7 +50,7 @@ local function get_weather(cityid)
 	local proxy = get_proxy()
 	local curl = "curl"
 	if proxy ~= nil then
-		print("proxy settings found")
+		print("proxy found: " .. proxy)
 	end
 	local success, stdout, stderr = nil, nil, nil
 	if wezterm.target_triple == "x86_64-pc-windows-msvc" then
@@ -78,7 +70,6 @@ local function get_weather(cityid)
 	if proxy ~= nil then
 		success, stdout, stderr = wezterm.run_child_process({
 			curl,
-			"-sf",
 			"--compressed",
 			"-x",
 			proxy,
@@ -89,7 +80,6 @@ local function get_weather(cityid)
 	else
 		success, stdout, stderr = wezterm.run_child_process({
 			curl,
-			"-sf",
 			"--compressed",
 			"https://s3.eu-central-1.amazonaws.com/app-prod-static.warnwetter.de/v16/current_measurement_"
 				.. cityid
@@ -143,7 +133,7 @@ local function get_weather(cityid)
 		local weather_temp = wezterm.json_parse(stdout).temperature / 10
 		return weather_icon .. weather_temp .. "°C"
 	end
-	print(stderr)
+	print("error collecting weather: " .. stderr)
 	return nil
 end
 -- This is where you actually apply your config choices
